@@ -1,0 +1,75 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 1, 2018, 10:22:46 PM
+    Author     : Shaun
+*/
+
+.rangeval{
+    border: 1px solid RoyalBlue;
+    padding: 8px;
+}
+.rangeval div .noUi-connect{
+    background-color: DodgerBlue;
+}
+.rangeval div .noUi-handle{
+    width:25px;
+    height:30px;
+}
+.rangeval .span{
+    /*background-color: #2962FF;*/
+    color: DodgerBlue;
+    font-weight: bold;
+    text-align: center;
+}
+/* Always set the map height explicitly to define the size of the div
+ * element that contains the map. */
+#map {
+    height: 90%;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.toggle {
+    /*width: 20px;*/
+    height: 40px
+}
+
+/* Style buttons */
+.btn {
+    background-color: DodgerBlue; /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 14px 22px; /* Some padding */
+    font-size: 16px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+    position: relative;
+}
+.btn input[type=checkbox] {
+    display:none;
+
+}
+
+.btn img {
+    width: 100%;
+    height: auto;
+
+}
+/* Darker background on mouse-over */
+.btn:hover {
+    background-color: RoyalBlue;
+}
+
+.center {
+    position: absolute;
+    left: 0;
+    top: 60%;
+    width: 100%;
+    text-align: center;
+}
