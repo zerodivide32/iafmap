@@ -23,6 +23,8 @@ ALTER TABLE
 ALTER TABLE
     iafmap.public.iaf_markers ADD COLUMN YEAR INTEGER;
 ALTER TABLE
+    iafmap.public.iaf_markers RENAME COLUMN type TO type_old;
+ALTER TABLE
     iafmap.public.iaf_markers RENAME COLUMN DATE TO contentDate;
 ALTER TABLE
     iafmap.public.iaf_markers ADD COLUMN typeID INTEGER;
@@ -46,7 +48,7 @@ SELECT
     public.iaf_markers.dateadded,
     public.iaf_markers.year,
     public.iaf_markers.typeid,
-    public.marker_types.typename,
+    public.marker_types.typename as "type",
     public.marker_types.typeimage,
     public.marker_types.typedescription
 FROM
@@ -62,3 +64,11 @@ ON
 -- * Update fact table with dimension keys
 -- ******************************        
 -- update iaf_markers set typeid=(select typeid from marker_types where initcap(iaf_markers.type)=initcap(marker_types.typename));        
+
+
+-- Final cleanup!
+-- Do we have records with no matching marker_type record? (If yes, there are a couple of free colors for the flag icon set.)
+-- SELECT distinct type_old from iaf_markers where type_old<>'' and initcap(type_old) not in(select typename from marker_types);
+
+-- Once marker_types is complete and iaf_markers.typeid is correct for all rows, the "type_old" column can be dropped.
+-- ALTER TABLE iaf_markers DROP COLUMN type_old;

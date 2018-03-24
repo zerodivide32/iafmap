@@ -60,13 +60,14 @@ include_once 'deebee.php';
                 <div id="swPest" class="toggle" ></div>
             </div> -->
             <?php
-            $result = mysqli_query($connection, "SELECT * FROM marker_types;");
+            //$result = mysqli_query($connection, "SELECT * FROM marker_types;");
+            $result = pg_query($connection, "SELECT * FROM marker_types;");
             if (!$result) {
-                die('Invalid query: ' . mysqli_connect_error());
+                die('Invalid query: ' . pg_last_error());
             }
-            while ($row = @mysqli_fetch_assoc($result)) {
-                $img = $row['typeImage'];
-                $typeName = $row['typeName'];
+            while ($row = @pg_fetch_assoc($result)) {
+                $img = $row['typeimage'];
+                $typeName = $row['typename'];
                 $checkboxName = "ck" . $typeName;
                 ?>
 
@@ -74,7 +75,9 @@ include_once 'deebee.php';
                     <input type="checkbox" id="<?= $checkboxName ?>" value="<?= $typeName; ?>" checked><img class="img" src="<?= $img ?>" width="22" height="38"> 
                     <div id="<?= "lbl" . $typeName ?>" class="center" ><?= $typeName ?></div>
                 </div>
-            <?php } ?>
+            <?php }
+            pg_close();
+            ?>
 
         </div></div>
     <div id="map" ></div>

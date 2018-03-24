@@ -21,7 +21,7 @@ error_log($excludeTypes);
 /*
  * Prepare the SQL statement
  */
-$query = "SELECT * FROM v_markers WHERE year between " . $yearStart . " AND " . $yearEnd;
+$query = "SELECT * FROM v_iaf_markers WHERE year between " . $yearStart . " AND " . $yearEnd;
 
 /* If excludeTypes is blank, prepare SQL NOT IN list */
 if ($excludeTypes != null && strlen($excludeTypes) > 1) {
@@ -35,9 +35,9 @@ if ($excludeTypes != null && strlen($excludeTypes) > 1) {
     $query = $query . $query_append;
 }
 
-$result = mysqli_query($connection, $query);
+$result = pg_query($connection, $query);
 if (!$result) {
-    die('Invalid query: ' . mysqli_connect_error());
+    die('Invalid query: ' . pg_last_error());
 }
 
 /*
@@ -50,16 +50,16 @@ header("Content-type: text/xml");
 echo '<markers>';
 
 // Iterate through the rows, printing XML nodes for each
-while ($row = @mysqli_fetch_assoc($result)) {
+while ($row = @pg_fetch_assoc($result) ) {
     // Add to XML document node
     echo '<marker ';
     echo 'id="' . $row['id'] . '" ';
-    echo 'name="' . parseToXML($row['name']) . '" ';
-    echo 'address="' . parseToXML($row['address']) . '" ';
+    echo 'name="' . parseToXML($row['title']) . '" ';
+    echo 'address="' . parseToXML($row['url']) . '" ';
     echo 'lat="' . $row['lat'] . '" ';
     echo 'lng="' . $row['lng'] . '" ';
     echo 'type="' . $row['type'] . '" ';
-    echo 'icon="' . $row['image'] . '" ';
+    echo 'icon="' . $row['typeimage'] . '" ';
     echo 'year="' . $row['year'] . '" ';
     echo '/>';
 }
